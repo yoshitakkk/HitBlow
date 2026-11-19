@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#f5f4ef" />
+    <meta
+      name="description"
+      content="4桁の数字を推理して遊ぶHit & Blow。ひとりでも、友だちとのオンライン対戦でも楽しめます。"
+    />
+    <title>Hit & Blow — 数字を推理しよう</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Noto+Sans+JP:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="Hit & Blow ホーム">
+          <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+          <span>HIT <b>&</b> BLOW</span>
+        </a>
+        <span class="topbar-note"><span class="live-dot"></span> A LITTLE GAME OF LOGIC</span>
+      </header>
+
+      <section id="home-screen" class="screen">
+        <div class="hero">
+          <div class="eyebrow"><span>01</span> THINK. GUESS. REPEAT.</div>
+          <h1>ひらめきで、<br /><span>数字を解こう。</span></h1>
+          <p class="hero-copy">
+            4桁の数字を推理する、シンプルな頭脳ゲーム。<br />
+            あと一手でわかるかも。
+          </p>
+        </div>
+
+        <div class="mode-grid">
+          <button class="mode-card solo-card" data-action="solo" type="button">
+            <span class="card-index">MODE 01</span>
+            <span class="mode-icon solo-icon" aria-hidden="true">
+              <span class="mini-digit">?</span><span class="spark">✳</span>
+            </span>
+            <span class="mode-title">ひとりで遊ぶ</span>
+            <span class="mode-desc">CPUの数字を当てよう</span>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </button>
+          <button class="mode-card online-card" data-action="online" type="button">
+            <span class="card-index">MODE 02</span>
+            <span class="mode-icon online-icon" aria-hidden="true">
+              <span class="person person-one"></span><span class="person person-two"></span>
+            </span>
+            <span class="mode-title">オンライン対戦</span>
+            <span class="mode-desc">友だちと数字を読み合おう</span>
+            <span class="card-arrow" aria-hidden="true">↗</span>
+          </button>
+        </div>
+
+        <aside class="how-to">
+          <span class="how-icon" aria-hidden="true">i</span>
+          <p><b>遊び方</b>　4つの異なる数字を推理。数字と位置が同じなら <strong>HIT</strong>、数字だけ同じなら <strong>BLOW</strong>。</p>
+        </aside>
+        <footer class="footer"><span>MADE FOR CURIOUS MINDS</span><span>NO REPEATED DIGITS · 0000—9999</span></footer>
+      </section>
+
+      <section id="online-screen" class="screen hidden">
+        <button class="back-button" data-action="home" type="button">← <span>モード選択</span></button>
+        <div class="page-heading">
+          <div class="eyebrow"><span>02</span> PLAY TOGETHER</div>
+          <h2>友だちと、<br class="mobile-break" />読み合おう。</h2>
+          <p>ルームを作るか、招待コードで参加してください。</p>
+        </div>
+        <div class="online-options">
+          <article class="online-option">
+            <span class="option-number">A</span>
+            <h3>ルームを作る</h3>
+            <p>コードを発行して友だちを招待。</p>
+            <button class="button button-dark" data-action="create-room" type="button">ルームを作成 <span>↗</span></button>
+          </article>
+          <article class="online-option join-option">
+            <span class="option-number">B</span>
+            <h3>ルームに参加</h3>
+            <p>友だちから届いたコードを入力。</p>
+            <form id="join-form" class="join-form">
+              <label class="sr-only" for="room-code">ルームコード</label>
+              <input id="room-code" maxlength="6" autocomplete="off" placeholder="例：A3F91C" />
+              <button class="button button-outline" type="submit">参加する <span>→</span></button>
+            </form>
+          </article>
+        </div>
+        <p id="online-error" class="error-message" role="alert"></p>
+        <footer class="footer"><span>PLAY WITH SOMEONE, ANYWHERE</span><span>ROOMS LAST WHILE PLAYERS ARE CONNECTED</span></footer>
+      </section>
+
+      <section id="game-screen" class="screen hidden">
+        <button class="back-button" data-action="home" type="button">← <span>モード選択</span></button>
+        <div class="game-header">
+          <div>
+            <div class="eyebrow"><span id="game-mode-label">01</span> <span id="game-mode-caption">SOLO CHALLENGE</span></div>
+            <h2 id="game-title">数字を見つけよう。</h2>
+          </div>
+          <button id="restart-button" class="restart-button" type="button" aria-label="ゲームをやり直す">↻ <span>やり直す</span></button>
+        </div>
+
+        <div id="room-banner" class="room-banner hidden">
+          <span>ROOM CODE</span><strong id="room-code-display"></strong>
+          <button id="copy-code" type="button">コピー</button>
+          <span id="connection-status" class="connection-status"></span>
+        </div>
+
+        <div id="secret-panel" class="secret-panel hidden">
+          <div class="panel-topline"><span class="step-number">STEP 01</span><span class="step-status">YOUR SECRET</span></div>
+          <h3>あなたの4桁を決めよう。</h3>
+          <p>相手に当ててもらう数字です。重複しない数字を選んでください。</p>
+          <form id="secret-form" class="entry-form">
+            <label class="sr-only" for="secret-input">あなたの4桁の数字</label>
+            <input id="secret-input" class="number-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="1234" />
+            <button class="button button-dark" type="submit">決定する <span>→</span></button>
+          </form>
+          <p id="secret-waiting" class="waiting-note hidden"><span class="loading-dot"></span> 相手の準備を待っています…</p>
+        </div>
+
+        <div id="game-layout" class="game-layout">
+          <section class="play-panel">
+            <div class="panel-topline"><span class="step-number" id="turn-indicator">YOUR TURN</span><span class="step-status" id="attempt-count">0 GUESSES</span></div>
+            <h3 id="play-prompt">4桁の数字を入力。</h3>
+            <p id="play-description">数字はすべて異なるものにしてください。</p>
+            <form id="guess-form" class="entry-form">
+              <label class="sr-only" for="guess-input">推理する4桁の数字</label>
+              <input id="guess-input" class="number-input" inputmode="numeric" autocomplete="off" maxlength="4" placeholder="1234" />
+              <button class="button button-dark" type="submit">推理する <span>→</span></button>
+            </form>
+            <p id="game-message" class="game-message" role="status"></p>
+          </section>
+          <section class="history-panel">
+            <div class="history-heading"><h3>推理の記録</h3><span id="history-count">0</span></div>
+            <div class="history-labels"><span>GUESS</span><span>RESULT</span></div>
+            <ol id="history-list" class="history-list"></ol>
+            <div id="empty-history" class="empty-history"><span>···</span><p>最初の推理を<br />ここに記録します。</p></div>
+          </section>
+        </div>
+        <div id="result-panel" class="result-panel hidden">
+          <span class="result-mark" id="result-mark">✳</span>
+          <div><span class="step-number" id="result-kicker">GAME OVER</span><h3 id="result-title"></h3><p id="result-copy"></p></div>
+          <button class="button button-dark" id="play-again" type="button">もう一度遊ぶ <span>↻</span></button>
+        </div>
+        <footer class="footer"><span id="game-footer-left">EVERY GUESS GETS YOU CLOSER</span><span>HIT = RIGHT DIGIT, RIGHT PLACE</span></footer>
+      </section>
+    </main>
+  </body>
+</html>
