@@ -2,7 +2,7 @@
   "name": "hit-blow",
   "version": "1.0.0",
   "private": true,
-  "description": "Japanese Hit & Blow game with solo and online multiplayer modes",
+  "description": "Japanese single-player Hit & Blow game",
   "engines": {
     "node": ">=18"
   },
