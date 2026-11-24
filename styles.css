@@ -45,7 +45,10 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .button { display: inline-flex; align-items: center; justify-content: center; gap: 24px; min-height: 52px; padding: 12px 22px; border: 1px solid transparent; border-radius: 7px; font-weight: 700; text-align: center; }
 .button-primary { background: var(--primary); color: #fff; }
 .button-primary:hover { background: var(--primary-hover); }
-.hero .button { min-width: 210px; justify-content: space-between; }
+.button-secondary { border-color: #9daaba; background: var(--surface); color: var(--text); }
+.button-secondary:hover { background: #e6ebf2; }
+.mode-buttons { display: grid; justify-items: start; gap: 10px; }
+.mode-buttons .button { min-width: 230px; justify-content: space-between; }
 
 .rules { padding: 28px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
 .rules h2, .play-panel h2, .history-heading h2 { margin: 0; font-size: 20px; line-height: 1.4; }
@@ -79,6 +82,37 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .digit-button:not(:disabled):hover { border-color: var(--primary); background: #edf3ff; }
 .digit-button:disabled { border-color: #cbd2dc; background: #e8ebef; color: #5e6a79; cursor: not-allowed; }
 .digit-button.selected { border-color: #95a3b5; background: #d3dae4; color: #374458; text-decoration: line-through; }
+.digit-buttons.color-mode { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.digit-buttons.color-mode .digit-button {
+  width: 100%;
+  aspect-ratio: 1;
+  min-height: 0;
+  border: 2px solid #d6dbe2;
+  border-radius: 50%;
+  background: var(--ball-color);
+  box-shadow: inset -3px -4px 6px #0003, inset 3px 3px 5px #fff8;
+}
+.digit-buttons.color-mode .digit-button:not(:disabled):hover { border-color: #26364a; filter: brightness(1.08); }
+.digit-buttons.color-mode .digit-button:disabled { border-color: #9ba5b2; background: var(--ball-color); opacity: .48; }
+.color-ball {
+  display: inline-block;
+  width: 32px;
+  aspect-ratio: 1;
+  border: 2px solid #d6dbe2;
+  border-radius: 50%;
+  background: var(--ball-color);
+  box-shadow: inset -3px -4px 6px #0003, inset 3px 3px 5px #fff8;
+  vertical-align: middle;
+}
+.color-red { --ball-color: #f22632; }
+.color-yellow { --ball-color: #ffc928; }
+.color-pink { --ball-color: #f48caf; }
+.color-blue { --ball-color: #11a9de; }
+.color-green { --ball-color: #10b755; }
+.color-purple { --ball-color: #a85acb; }
+.guess-slots .color-ball { width: min(38px, 85%); }
+.color-history-guess { display: flex; gap: 4px; letter-spacing: 0; }
+.color-history-guess .color-ball { width: 28px; }
 .entry-actions { display: flex; gap: 10px; margin-top: 16px; }
 .entry-actions .button { flex: 1; }
 .undo-button { min-height: 52px; padding: 10px 16px; border: 1px solid #9daaba; border-radius: 6px; background: #fff; color: var(--text); font-weight: 700; }
@@ -108,6 +142,8 @@ button:focus-visible, a:focus-visible, input:focus-visible {
   .home-content { grid-template-columns: 1fr; gap: 36px; padding: 48px 0 40px; }
   .hero h1 { font-size: clamp(32px, 9vw, 42px); }
   .hero-copy { margin: 16px 0 24px; }
+  .mode-buttons { justify-items: stretch; }
+  .mode-buttons .button { width: 100%; }
   .rules { padding: 22px; }
   .game-layout { grid-template-columns: 1fr; }
   .play-panel, .history-panel { padding: 22px; }
