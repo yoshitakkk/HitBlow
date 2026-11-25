@@ -1,6 +1,7 @@
 const screens = {
   home: document.querySelector("#home-screen"),
   game: document.querySelector("#game-screen"),
+  online: document.querySelector("#online-screen"),
 };
 const modes = {
   numbers: {

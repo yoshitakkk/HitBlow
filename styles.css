@@ -20,7 +20,7 @@ body {
   line-height: 1.65;
 }
 
-button, input { font: inherit; }
+button, input, select { font: inherit; }
 button { cursor: pointer; }
 button:focus-visible, a:focus-visible, input:focus-visible {
   outline: 3px solid #2669d8;
@@ -47,6 +47,7 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .button-primary:hover { background: var(--primary-hover); }
 .button-secondary { border-color: #9daaba; background: var(--surface); color: var(--text); }
 .button-secondary:hover { background: #e6ebf2; }
+.button:disabled, .give-up-button:disabled { opacity: .5; cursor: not-allowed; }
 .mode-buttons { display: grid; justify-items: start; gap: 10px; }
 .mode-buttons .button { min-width: 230px; justify-content: space-between; }
 
@@ -75,8 +76,8 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .entry-form { margin-top: 22px; }
 .guess-label { display: block; margin-bottom: 8px; color: var(--secondary); font-size: 14px; font-weight: 700; }
 .guess-slots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
-.guess-slots span { display: grid; min-height: 52px; place-items: center; border: 1px solid #8190a3; border-radius: 6px; color: #68778a; font-family: ui-monospace, Consolas, monospace; font-size: 24px; font-weight: 700; }
-.guess-slots span.filled { border-color: var(--primary); background: #edf3ff; color: var(--text); }
+.guess-slots > span { display: grid; min-height: 52px; place-items: center; border: 1px solid #8190a3; border-radius: 6px; color: #68778a; font-family: ui-monospace, Consolas, monospace; font-size: 24px; font-weight: 700; }
+.guess-slots > span.filled { border-color: var(--primary); background: #edf3ff; color: var(--text); }
 .digit-buttons { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-top: 16px; }
 .digit-button { min-width: 0; min-height: 48px; border: 1px solid #8190a3; border-radius: 6px; background: #fff; color: var(--text); font-family: ui-monospace, Consolas, monospace; font-size: 20px; font-weight: 700; }
 .digit-button:not(:disabled):hover { border-color: var(--primary); background: #edf3ff; }
@@ -113,6 +114,18 @@ button:focus-visible, a:focus-visible, input:focus-visible {
 .guess-slots .color-ball { width: min(38px, 85%); }
 .color-history-guess { display: flex; gap: 4px; letter-spacing: 0; }
 .color-history-guess .color-ball { width: 28px; }
+.online-panel { margin-bottom: 18px; padding: 24px; border: 1px solid var(--border); border-radius: 10px; background: var(--surface); }
+.online-panel h2 { margin: 0; font-size: 20px; }
+.online-panel p { margin: 10px 0; color: var(--secondary); }
+.online-panel label { display: block; font-weight: 700; }
+.online-panel select, .invite-row input { min-width: 0; min-height: 48px; padding: 8px; border: 1px solid #8190a3; border-radius: 6px; background: #fff; }
+.online-panel select { margin: 8px 8px 8px 0; }
+.invite-row { display: flex; gap: 8px; margin-top: 8px; }
+.invite-row input { flex: 1; }
+#online-history .history-row { flex-wrap: wrap; padding: 8px 0; }
+.online-player { flex-basis: 100%; color: var(--secondary); font-size: 13px; font-weight: 700; }
+#online-status { font-weight: 700; color: var(--text); }
+#online-connection, #online-error { color: var(--error); }
 .entry-actions { display: flex; gap: 10px; margin-top: 16px; }
 .entry-actions .button { flex: 1; }
 .undo-button { min-height: 52px; padding: 10px 16px; border: 1px solid #9daaba; border-radius: 6px; background: #fff; color: var(--text); font-weight: 700; }

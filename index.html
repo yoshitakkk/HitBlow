@@ -11,6 +11,7 @@
     <title>Hit & Blow — 数字を推理しよう</title>
     <link rel="stylesheet" href="styles.css" />
     <script src="app.js" defer></script>
+    <script src="online.js" defer></script>
   </head>
   <body>
     <main class="app-shell">
@@ -29,6 +30,7 @@
             <div class="mode-buttons">
               <button id="start-button" class="button button-primary" type="button">数字モード <span aria-hidden="true">→</span></button>
               <button id="color-start-button" class="button button-secondary" type="button">6色ボールモード <span aria-hidden="true">→</span></button>
+              <button id="online-start-button" class="button button-secondary" type="button">オンライン対戦 <span aria-hidden="true">→</span></button>
             </div>
           </div>
           <section class="rules" aria-labelledby="rules-title">
@@ -41,6 +43,58 @@
             <p class="rule-example">数字でも色でも、答えと入力の並びを比べてHIT・BLOWを判定します。</p>
           </section>
         </div>
+      </section>
+
+      <section id="online-screen" class="screen hidden">
+        <button class="back-button" id="online-home" type="button">← ホームに戻る</button>
+        <div class="game-header"><h1>オンライン対戦</h1></div>
+        <div id="online-lobby" class="online-panel">
+          <h2>2人で対戦</h2>
+          <p>部屋を作り、招待URLを相手に送ってください。各自が答えを設定し、交互に推理します。</p>
+          <label for="online-mode">対戦モード</label>
+          <select id="online-mode">
+            <option value="numbers">数字</option>
+            <option value="colors">6色ボール</option>
+          </select>
+          <button id="online-create" class="button button-primary" type="button">部屋を作る</button>
+        </div>
+        <div id="online-room" class="hidden">
+          <div class="online-panel">
+            <p id="online-room-mode"></p>
+            <label for="online-invite">招待URL</label>
+            <div class="invite-row">
+              <input id="online-invite" type="text" readonly />
+              <button id="online-copy" class="button button-secondary" type="button">コピー</button>
+            </div>
+            <p id="online-status" role="status"></p>
+            <p id="online-connection" role="status"></p>
+          </div>
+          <div class="game-layout">
+            <section class="play-panel">
+              <h2 id="online-entry-title">答えを設定</h2>
+              <p id="online-description"></p>
+              <form id="online-form" class="entry-form">
+                <div class="guess-display">
+                  <span id="online-guess-label" class="guess-label">選択した並び</span>
+                  <div id="online-slots" class="guess-slots" aria-hidden="true"><span>−</span><span>−</span><span>−</span><span>−</span></div>
+                  <span id="online-guess-status" class="sr-only" role="status"></span>
+                </div>
+                <div id="online-tokens" class="digit-buttons" role="group" aria-describedby="online-description"></div>
+                <div class="entry-actions">
+                  <button id="online-undo" class="undo-button" type="button" disabled>1つ戻す</button>
+                  <button id="online-submit" class="button button-primary" type="submit">答えを設定</button>
+                </div>
+              </form>
+              <button id="online-surrender" class="give-up-button" type="button">降参する</button>
+            </section>
+            <section class="history-panel">
+              <div class="history-heading"><h2>対戦の記録</h2><span id="online-attempts">0回</span></div>
+              <ol id="online-history" class="history-list"></ol>
+              <p id="online-empty" class="empty-history">推理の結果がここに表示されます。</p>
+            </section>
+          </div>
+        </div>
+        <p id="online-error" class="game-message" role="alert"></p>
       </section>
 
       <section id="game-screen" class="screen hidden">
